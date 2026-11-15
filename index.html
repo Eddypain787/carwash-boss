@@ -11,19 +11,19 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>
 :root{
-  --bg:#0b1220; --card:#141d31; --card2:#1b2740; --line:#26334f;
-  --blue:#2f8bff; --cyan:#37c6ff; --txt:#eaf1ff; --dim:#8fa3c7;
-  --green:#2ec27e; --red:#ff5d5d; --amber:#ffb84d;
+  --bg:#0b0b0c; --card:#161616; --card2:#1f1f1f; --line:#2d2d2d;
+  --blue:#ffd400; --cyan:#ffd400; --txt:#f6f3ea; --dim:#9d978a;
+  --green:#2ec27e; --red:#ff5d5d; --amber:#ffd400;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
-header{padding:calc(env(safe-area-inset-top) + 14px) 16px 10px;background:linear-gradient(180deg,#101b30,#0b1220);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+header{padding:calc(env(safe-area-inset-top) + 14px) 16px 10px;background:linear-gradient(180deg,#181818,#0b0b0c);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
 .logo{display:flex;align-items:center;gap:10px}
 .logo .bubble{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo h1{font-size:18px;letter-spacing:.3px}
 .logo p{font-size:11px;color:var(--dim)}
 main{padding:14px 14px 20px;max-width:640px;margin:0 auto}
-.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:#0e1626;border-top:1px solid var(--line);padding:6px 4px calc(env(safe-area-inset-bottom) + 6px);z-index:10}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:#0d0d0d;border-top:1px solid var(--line);padding:6px 4px calc(env(safe-area-inset-bottom) + 6px);z-index:10}
 .tabs button{flex:1;background:none;border:none;color:var(--dim);font-size:10px;display:flex;flex-direction:column;gap:3px;align-items:center;font-family:inherit}
 .tabs button span{font-size:20px}
 .tabs button.on{color:var(--cyan)}
@@ -34,7 +34,7 @@ h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--
 .statrow .card{flex:1;margin-bottom:0}
 .statrow p{font-size:11px;color:var(--dim);margin-bottom:4px}
 button{font-family:inherit}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:none;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:none;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;width:100%;color:#111}
 .btn.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
 .btn.small{padding:8px 12px;font-size:12px;width:auto;border-radius:10px}
 .btn.green{background:linear-gradient(135deg,#1f9d5f,#2ec27e)}
@@ -50,13 +50,13 @@ textarea{min-height:90px;resize:vertical}
 label{font-size:11px;color:var(--dim);display:block;margin:10px 0 5px;text-transform:uppercase;letter-spacing:.8px}
 .modal{position:fixed;inset:0;background:rgba(4,8,16,.75);z-index:20;display:none;align-items:flex-end;justify-content:center}
 .modal.open{display:flex}
-.sheet{background:#131c30;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 18px);border-top:2px solid var(--line)}
+.sheet{background:#151515;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 18px);border-top:2px solid var(--line)}
 .sheet h3{font-size:17px;margin-bottom:4px}
 .chip{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:7px 13px;font-size:12px;margin:4px 6px 4px 0}
-.chip.on{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border-color:transparent}
+.chip.on{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#111;border-color:transparent}
 .pill{font-size:10px;padding:3px 9px;border-radius:999px;font-weight:700}
 .pill.today{background:rgba(46,194,126,.18);color:var(--green)}
-.pill.soon{background:rgba(255,184,77,.18);color:var(--amber)}
+.pill.soon{background:rgba(255,212,0,.18);color:var(--amber)}
 .pill.paid{background:rgba(46,194,126,.18);color:var(--green)}
 .pill.due{background:rgba(255,93,93,.18);color:var(--red)}
 .empty{text-align:center;color:var(--dim);font-size:13px;padding:22px 8px}
@@ -101,6 +101,7 @@ const DEF = {
   ],
   customers:[], bookings:[], invoices:[], promos:[],
   counters:{inv:1000,book:1000},
+  travel:{f1:5,f2:10,f3:15,f4:20},
   promos:[
     {id:1,code:"FIRSTWASH5",title:"$5 off first wash",msg:"Hey {name}! This is {biz}. Here's $5 OFF your first wash with us (code FIRSTWASH5). Reply and I'll lock in your spot 🚗🫧"},
     {id:2,code:"SPARKLE10",title:"10% off full detail",msg:"Hi {name}, {biz} here! This week only: 10% OFF any full detail (code SPARKLE10). Want me to grab you a spot?"},
@@ -115,6 +116,8 @@ function uid(){ return Math.max(100,...DB.services.map(s=>s.id))+1; }
 const $ = id => document.getElementById(id);
 const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const money = n => "$"+(Math.round(n*100)/100).toFixed(2);
+const travelFee = z => { if(!z) return 0; const d=DB.travel||{f1:5,f2:10,f3:15,f4:20}; return d["f"+z]||0; };
+const TRAV = () => [{v:0,l:"No travel fee",f:0},{v:1,l:"Up to 5 mi",f:travelFee(1)},{v:2,l:"6-10 mi",f:travelFee(2)},{v:3,l:"11-15 mi",f:travelFee(3)},{v:4,l:"15+ mi",f:travelFee(4)}];
 
 function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),1800); }
 function openSheet(html){ $("sheet").innerHTML=html; $("modal").classList.add("open"); }
@@ -177,7 +180,7 @@ function bookRow(b){
   return `<div class="card" style="padding:12px">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
       <div><div class="nm" style="font-weight:700">${esc(c.name)}</div>
-      <div class="ds" style="font-size:12px;color:var(--dim)">${s?s.name:"wash"} · ${fmtDate(b.when)}</div></div>
+      <div class="ds" style="font-size:12px;color:var(--dim)">${s?s.name:"wash"} · ${fmtDate(b.when)}${b.addr?" · "+esc(b.addr):""}</div>${travelFee(b.zone)?`<div class="ds" style="font-size:12px;color:var(--amber)">travel +${money(travelFee(b.zone))}</div>`:""}</div>
       <span class="pill ${isToday?"today":"soon"}">${isToday?"TODAY":when.toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>
     </div>
     <div class="row">
@@ -190,7 +193,7 @@ function delBooking(id){ if(!confirm("Remove this booking?"))return; DB.bookings
 function reminderText(id){
   const b=DB.bookings.find(x=>x.id===id); const c=DB.customers.find(c=>c.id===b.cust)||{name:"there",phone:""};
   const s=DB.services.find(s=>s.id===b.svc);
-  const msg=`Hi ${c.name}, reminder from ${biz()} 🫧 You're booked for a ${s?s.name:"wash"} on ${fmtDate(b.when)}. Reply YES to confirm or tell me if you need a different time. See you then!`;
+  const msg=`Hi ${c.name}, reminder from ${biz()} 🫧 You're booked for a ${s?s.name:"wash"} on ${fmtDate(b.when)}${b.addr?" at "+b.addr:""}. Reply YES to confirm or tell me if you need a different time. See you then!`;
   if(c.phone){ window.location=smsHref(c.phone,msg); }
   else { openSheet(`<h3>Reminder text</h3><div class="invbox">${esc(msg)}</div><div class="row"><button class="btn" onclick="copyText(this.dataset.t)" data-t="${esc(msg).replace(/"/g,"&quot;")}">Copy text</button><button class="btn ghost" onclick="closeSheet()">Close</button></div>`); }
 }
@@ -262,6 +265,8 @@ function newBooking(){
   openSheet(`<h3>Book a wash</h3>
   <label>Customer</label><select id="b_cust">${DB.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select>
   <label>Service</label><select id="b_svc">${DB.services.map(s=>`<option value="${s.id}">${esc(s.name)} — ${money(s.price)}</option>`).join("")}</select>
+  <label>Wash address — where you drive to</label><input id="b_addr" placeholder="street, city">
+  <label>Travel zone</label><select id="b_zone">${TRAV().map(z=>`<option value="${z.v}">${z.l}${z.f?" — +"+money(z.f):" — free"}</option>`).join("")}</select>
   <label>Date & time</label><input id="b_when" type="datetime-local">
   <div class="row"><button class="btn" onclick="saveBooking()">Book it</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>
   <p class="note">No customer saved yet? Add one first in More → Customers.</p>`);
@@ -270,8 +275,9 @@ function newBooking(){
 }
 function saveBooking(){
   const cust=parseInt($("b_cust").value), svc=parseInt($("b_svc").value), when=$("b_when").value;
+  const addr=$("b_addr").value.trim(), zone=parseInt($("b_zone").value)||0;
   if(!when){ toast("Pick a date & time"); return; }
-  DB.bookings.push({id:Date.now(),cust,svc,when:new Date(when).toISOString()});
+  DB.bookings.push({id:Date.now(),cust,svc,when:new Date(when).toISOString(),addr,zone});
   save(); closeSheet(); nav("bookings"); toast("Booked — text them a reminder from the booking");
 }
 
@@ -301,13 +307,13 @@ function invRow(i){
   </div>`;
 }
 function newInvoice(){
-  INV_DRAFT={items:[],discount:0,tax:DB.tax,cust:null};
+  INV_DRAFT={items:[],discount:0,tax:DB.tax,travel:0,cust:null};
   if(!DB.customers.length){ editCust(0); toast("Add the customer first, then build the invoice"); return; }
   drawInvSheet();
 }
 function drawInvSheet(){
   const c=DB.customers.find(x=>x.id===INV_DRAFT.cust);
-  const sub=INV_DRAFT.items.reduce((s,x)=>s+x.price,0);
+  const sub=INV_DRAFT.items.reduce((s,x)=>s+x.price,0)+(INV_DRAFT.travel||0);
   const taxAmt=Math.max(0,sub-(INV_DRAFT.discount||0))*((DB.tax||0)/100);
   const total=Math.max(0,sub-(INV_DRAFT.discount||0))+taxAmt;
   openSheet(`<h3>New invoice</h3>
@@ -318,8 +324,9 @@ function drawInvSheet(){
   <label>Add services</label>
   <div>${DB.services.map(s=>`<span class="chip ${INV_DRAFT.items.find(x=>x.id===s.id)?"on":""}" onclick="addInvItem(${s.id})">${esc(s.name)} ${money(s.price)}</span>`).join("")}</div>
   <label>Discount ($)</label><input type="number" inputmode="decimal" value="${INV_DRAFT.discount||""}" onchange="INV_DRAFT.discount=parseFloat(this.value)||0;drawInvSheet()">
+  <label>Travel fee ($) — driving to the customer</label><input type="number" inputmode="decimal" value="${INV_DRAFT.travel||""}" onchange="INV_DRAFT.travel=parseFloat(this.value)||0;drawInvSheet()">
   <div style="margin-top:12px">
-    ${INV_DRAFT.items.length?INV_DRAFT.items.map(x=>`<div class="total"><span>${esc(x.name)} <span style="color:var(--dim);font-size:11px">✕</span></span><span>${money(x.price)}</span></div>`).join("")+`<div class="total"><span>Discount</span><span style="color:var(--green)">-${money(INV_DRAFT.discount||0)}</span></div><div class="total"><span>Tax (${DB.tax}%)</span><span>${money(taxAmt)}</span></div><div class="total b"><span>Total</span><span style="color:var(--cyan)">${money(total)}</span></div>`:`<div class="empty">Tap services above to add them</div>`}
+    ${INV_DRAFT.items.length?INV_DRAFT.items.map(x=>`<div class="total"><span>${esc(x.name)} <span style="color:var(--dim);font-size:11px">✕</span></span><span>${money(x.price)}</span></div>`).join("")+`${INV_DRAFT.travel?`<div class="total"><span>Travel fee</span><span>${money(INV_DRAFT.travel)}</span></div>`:""}`+`<div class="total"><span>Discount</span><span style="color:var(--green)">-${money(INV_DRAFT.discount||0)}</span></div><div class="total"><span>Tax (${DB.tax}%)</span><span>${money(taxAmt)}</span></div><div class="total b"><span>Total</span><span style="color:var(--cyan)">${money(total)}</span></div>`:`<div class="empty">Tap services above to add them</div>`}
   </div>
   <div class="row"><button class="btn" onclick="saveInv()">Save invoice</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>`);
 }
@@ -331,16 +338,18 @@ function addInvItem(sid){
 }
 function saveInv(){
   if(!INV_DRAFT.items.length){ toast("Add at least one service"); return; }
-  const sub=INV_DRAFT.items.reduce((s,x)=>s+x.price,0);
-  const total=Math.max(0,sub-(INV_DRAFT.discount||0));
+  const sub=INV_DRAFT.items.reduce((s,x)=>s+x.price,0)+(INV_DRAFT.travel||0);
+  const taxAmt=Math.max(0,sub-(INV_DRAFT.discount||0))*((DB.tax||0)/100);
+  const total=Math.max(0,sub-(INV_DRAFT.discount||0))+taxAmt;
   DB.counters.inv++;
-  const inv={id:Date.now(),num:"INV-"+DB.counters.inv,cust:INV_DRAFT.cust,items:INV_DRAFT.items,discount:INV_DRAFT.discount||0,taxAmt:taxAmt,subtotal:sub,total,date:new Date().toISOString(),paid:false};
+  const inv={id:Date.now(),num:"INV-"+DB.counters.inv,cust:INV_DRAFT.cust,items:INV_DRAFT.items,discount:INV_DRAFT.discount||0,travel:INV_DRAFT.travel||0,taxAmt:taxAmt,subtotal:sub,total:total,date:new Date().toISOString(),paid:false};
   DB.invoices.push(inv); save(); closeSheet(); nav("invoices"); toast(inv.num+" saved");
 }
 function invText(i){
   const c=DB.customers.find(x=>x.id===i.cust)||{name:"Walk-in"};
   let t=`${biz()} — ${i.num}\nCustomer: ${c.name}\nDate: ${new Date(i.date).toLocaleDateString("en-US")}\n`;
   i.items.forEach(x=>t+=`• ${x.name} — ${money(x.price)}\n`);
+  if(i.travel) t+=`Travel fee — ${money(i.travel)}\n`;
   if(i.discount) t+=`Discount — -${money(i.discount)}\n`;
   if(i.taxAmt) t+=`Tax — ${money(i.taxAmt)}\n`;
   t+=`TOTAL: ${money(i.total)}\n`;
@@ -416,6 +425,13 @@ function renderMore(){
     <label>Business name</label><input id="m_name" value="${esc(DB.biz.name)}">
     <label>Tagline</label><input id="m_tag" value="${esc(DB.biz.tag)}">
     <label>Tax rate (%) — set 0 if you don't charge tax</label><input id="m_tax" type="number" inputmode="decimal" value="${DB.tax||0}">
+    <label>Travel fees ($) — up to 5 mi / 6-10 mi / 11-15 mi / 15+ mi</label>
+    <div class="row" style="gap:6px">
+      <input id="m_t1" type="number" inputmode="decimal" value="${(DB.travel&&DB.travel.f1)||5}">
+      <input id="m_t2" type="number" inputmode="decimal" value="${(DB.travel&&DB.travel.f2)||10}">
+      <input id="m_t3" type="number" inputmode="decimal" value="${(DB.travel&&DB.travel.f3)||15}">
+      <input id="m_t4" type="number" inputmode="decimal" value="${(DB.travel&&DB.travel.f4)||20}">
+    </div>
     <div class="row"><button class="btn" onclick="saveBiz()">Save</button></div>
   </div>
   <div class="card"><h2 class="sec">Data</h2>
@@ -425,7 +441,7 @@ function renderMore(){
   <button class="btn ghost" onclick="nav('cust')">👥 Customers</button>`;
 }
 function navCust(){ TAB="cust"; renderCustomers(); $("tabs").innerHTML=TABS.map(t=>`<button onclick="nav('${t.id}')"><span>${t.ic}</span>${t.label}</button>`).join(""); }
-function saveBiz(){ DB.biz.name=$("m_name").value.trim()||"Wash Boss"; DB.biz.tag=$("m_tag").value.trim(); DB.tax=parseFloat($("m_tax").value)||0; save(); render(); toast("Saved"); }
+function saveBiz(){ DB.biz.name=$("m_name").value.trim()||"Wash Boss"; DB.biz.tag=$("m_tag").value.trim(); DB.tax=parseFloat($("m_tax").value)||0; DB.travel={f1:parseFloat($("m_t1").value)||0,f2:parseFloat($("m_t2").value)||0,f3:parseFloat($("m_t3").value)||0,f4:parseFloat($("m_t4").value)||0}; save(); render(); toast("Saved"); }
 function exportData(){
   const blob=new Blob([JSON.stringify(DB,null,2)],{type:"application/json"});
   const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="washboss-backup-"+new Date().toISOString().slice(0,10)+".json"; a.click();
@@ -461,6 +477,7 @@ function pdfInv(id){
     y+=10; doc.setDrawColor(215,222,235); doc.line(40,y,572,y); y+=28;
     doc.setFontSize(11); doc.setTextColor(45,55,75);
     i.items.forEach(x=>{ doc.setFont(undefined,"bold"); doc.text(x.name,40,y); doc.setFont(undefined,"normal"); doc.text(money(x.price),572,y,{align:"right"}); y+=24; });
+    if(i.travel){ doc.setFont(undefined,"normal"); doc.setTextColor(45,55,75); doc.text("Travel fee",40,y); doc.text(money(i.travel),572,y,{align:"right"}); y+=24; }
     y+=4; doc.setDrawColor(225,230,240); doc.line(380,y,572,y); y+=24;
     doc.setFontSize(11);
     const line=(a,b,bold)=>{ doc.setFont(undefined,bold?"bold":"normal"); doc.setTextColor(bold?30:70,40,80); doc.text(a,470,y); doc.text(b,572,y,{align:"right"}); y+=22; };
