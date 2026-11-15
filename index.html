@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Wash Boss">
+<title>Wash Boss — Car Wash Business</title>
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{
+  --bg:#0b1220; --card:#141d31; --card2:#1b2740; --line:#26334f;
+  --blue:#2f8bff; --cyan:#37c6ff; --txt:#eaf1ff; --dim:#8fa3c7;
+  --green:#2ec27e; --red:#ff5d5d; --amber:#ffb84d;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+header{padding:calc(env(safe-area-inset-top) + 14px) 16px 10px;background:linear-gradient(180deg,#101b30,#0b1220);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .bubble{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo h1{font-size:18px;letter-spacing:.3px}
+.logo p{font-size:11px;color:var(--dim)}
+main{padding:14px 14px 20px;max-width:640px;margin:0 auto}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:#0e1626;border-top:1px solid var(--line);padding:6px 4px calc(env(safe-area-inset-bottom) + 6px);z-index:10}
+.tabs button{flex:1;background:none;border:none;color:var(--dim);font-size:10px;display:flex;flex-direction:column;gap:3px;align-items:center;font-family:inherit}
+.tabs button span{font-size:20px}
+.tabs button.on{color:var(--cyan)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin:6px 2px 10px}
+.big{font-size:30px;font-weight:800}
+.statrow{display:flex;gap:10px}
+.statrow .card{flex:1;margin-bottom:0}
+.statrow p{font-size:11px;color:var(--dim);margin-bottom:4px}
+button{font-family:inherit}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:none;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;width:100%}
+.btn.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.btn.small{padding:8px 12px;font-size:12px;width:auto;border-radius:10px}
+.btn.green{background:linear-gradient(135deg,#1f9d5f,#2ec27e)}
+.btn.red{background:linear-gradient(135deg,#c0392b,#ff5d5d)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.item .nm{font-weight:700;font-size:15px}
+.item .ds{font-size:12px;color:var(--dim);margin-top:2px}
+.item .pr{font-weight:800;font-size:16px;color:var(--cyan);white-space:nowrap}
+.row{display:flex;gap:8px;margin-top:10px}
+input,select,textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;color:var(--txt);padding:12px;font-size:15px;font-family:inherit;appearance:none}
+textarea{min-height:90px;resize:vertical}
+label{font-size:11px;color:var(--dim);display:block;margin:10px 0 5px;text-transform:uppercase;letter-spacing:.8px}
+.modal{position:fixed;inset:0;background:rgba(4,8,16,.75);z-index:20;display:none;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+.sheet{background:#131c30;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 18px);border-top:2px solid var(--line)}
+.sheet h3{font-size:17px;margin-bottom:4px}
+.chip{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:7px 13px;font-size:12px;margin:4px 6px 4px 0}
+.chip.on{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border-color:transparent}
+.pill{font-size:10px;padding:3px 9px;border-radius:999px;font-weight:700}
+.pill.today{background:rgba(46,194,126,.18);color:var(--green)}
+.pill.soon{background:rgba(255,184,77,.18);color:var(--amber)}
+.pill.paid{background:rgba(46,194,126,.18);color:var(--green)}
+.pill.due{background:rgba(255,93,93,.18);color:var(--red)}
+.empty{text-align:center;color:var(--dim);font-size:13px;padding:22px 8px}
+.total{display:flex;justify-content:space-between;font-size:15px;padding:5px 0}
+.total.b{font-size:19px;font-weight:800;border-top:1px solid var(--line);margin-top:8px;padding-top:10px}
+.invbox{white-space:pre-wrap;background:#0d1524;border:1px dashed var(--line);border-radius:12px;padding:12px;font-size:13px;line-height:1.5;font-family:ui-monospace,Menlo,monospace}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#1f2b45;border:1px solid var(--line);color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;z-index:30;opacity:0;transition:.25s;pointer-events:none}
+.toast.show{opacity:1}
+a{color:var(--cyan)}
+.note{font-size:11px;color:var(--dim);line-height:1.5;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="bubble">🫧</div>
+    <div><h1 id="bizName">Wash Boss</h1><p id="bizTag">car wash business, handled</p></div>
+  </div>
+</header>
+<main id="app"></main>
+
+<nav class="tabs" id="tabs"></nav>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- data ---------------- */
+const DEF = {
+  biz:{name:"Wash Boss", tag:"car wash business, handled"},
+  services:[
+    {id:1,name:"Basic Wash",price:20,desc:"exterior hand wash + dry, wheels rinsed"},
+    {id:2,name:"Full Service Wash",price:28,desc:"wash + hand dry + vacuum + windows + door jams"},
+    {id:3,name:"Wash & Hand Wax",price:65,desc:"full service + exterior hand wax"},
+    {id:4,name:"Interior Detail",price:80,desc:"seats, carpets, mats, dash, vents, windows"},
+    {id:5,name:"Full Detail",price:150,desc:"interior + exterior deep clean, wax, tires dressed"},
+    {id:6,name:"Carpet & Seat Shampoo",price:60,desc:"shampoo carpets, mats and seats, deodorize"},
+    {id:7,name:"Headlight Restoration",price:15,desc:"per headlight, haze removal + seal"},
+    {id:8,name:"Pet Hair Removal",price:25,desc:"deep hair removal from seats and carpets"},
+    {id:9,name:"Engine Bay Detail",price:30,desc:"degrease, rinse, dress"}
+  ],
+  customers:[], bookings:[], invoices:[], promos:[],
+  counters:{inv:1000,book:1000},
+  promos:[
+    {id:1,code:"FIRSTWASH5",title:"$5 off first wash",msg:"Hey {name}! This is {biz}. Here's $5 OFF your first wash with us (code FIRSTWASH5). Reply and I'll lock in your spot 🚗🫧"},
+    {id:2,code:"SPARKLE10",title:"10% off full detail",msg:"Hi {name}, {biz} here! This week only: 10% OFF any full detail (code SPARKLE10). Want me to grab you a spot?"},
+    {id:3,code:"WASH5FREE",title:"Wash 5, get 1 free",msg:"Hey {name}! Loyalty perk from {biz}: you've got a FREE wash coming. Want to use it this week?"},
+    {id:4,code:"REFER10",title:"Refer a friend, $10 off",msg:"Hey {name}! Refer a friend to {biz} and you both get $10 off your next wash. Just have them mention your name 🙌"}
+  ]
+};
+let DB = load();
+function load(){ try{ const r = JSON.parse(localStorage.getItem("cwdb_v1")); if(r && r.services) return Object.assign({},DEF,r);}catch(e){} return JSON.parse(JSON.stringify(DEF)); }
+function save(){ localStorage.setItem("cwdb_v1", JSON.stringify(DB)); }
+function uid(){ return Math.max(100,...DB.services.map(s=>s.id))+1; }
+const $ = id => document.getElementById(id);
+const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const money = n => "$"+(Math.round(n*100)/100).toFixed(2);
+
+function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),1800); }
+function openSheet(html){ $("sheet").innerHTML=html; $("modal").classList.add("open"); }
+function closeSheet(){ $("modal").classList.remove("open"); }
+$("modal").addEventListener("click",e=>{ if(e.target.id==="modal") closeSheet(); });
+function fmtDate(d){ const x=new Date(d); return x.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})+" · "+x.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}); }
+function smsHref(phone,msg){ const p=(phone||"").replace(/\D/g,""); return "sms:"+p+"?&body="+encodeURIComponent(msg); }
+function biz(){ return DB.biz.name; }
+
+/* ---------------- tabs ---------------- */
+const TABS=[
+  {id:"home",ic:"🏠",label:"Home",fn:renderHome},
+  {id:"services",ic:"🧼",label:"Services",fn:renderServices},
+  {id:"bookings",ic:"📅",label:"Bookings",fn:renderBookings},
+  {id:"invoices",ic:"🧾",label:"Invoices",fn:renderInvoices},
+  {id:"promos",ic:"📣",label:"Promos",fn:renderPromos},
+  {id:"more",ic:"⚙️",label:"More",fn:renderMore},
+];
+let TAB="home";
+function nav(id){ TAB=id; render(); }
+function render(){
+  $("tabs").innerHTML=TABS.map(t=>`<button class="${t.id===TAB?"on":""}" onclick="nav('${t.id}')"><span>${t.ic}</span>${t.label}</button>`).join("");
+  $("bizName").textContent=DB.biz.name; $("bizTag").textContent=DB.biz.tag;
+  TABS.find(t=>t.id===TAB).fn();
+}
+
+/* ---------------- home ---------------- */
+function renderHome(){
+  const now=new Date(); const todayKey=now.toDateString();
+  const upcoming=DB.bookings.filter(b=>new Date(b.when)>=new Date(now.getFullYear(),now.getMonth(),now.getDate())).sort((a,b)=>new Date(a.when)-new Date(b.when));
+  const todays=DB.bookings.filter(b=>new Date(b.when).toDateString()===todayKey);
+  const owed=DB.invoices.filter(i=>!i.paid).reduce((s,i)=>s+i.total,0);
+  const earned=DB.invoices.filter(i=>i.paid).reduce((s,i)=>s+i.total,0);
+  $("app").innerHTML=`
+  <div class="statrow">
+    <div class="card"><p>Booked today</p><div class="big">${todays.length}</div></div>
+    <div class="card"><p>Unpaid invoices</p><div class="big" style="color:${owed>0?"var(--red)":"var(--green)"}">${money(owed)}</div></div>
+  </div>
+  <div style="height:12px"></div>
+  <div class="statrow">
+    <div class="card"><p>Paid to date</p><div class="big" style="color:var(--green)">${money(earned)}</div></div>
+    <div class="card"><p>Customers</p><div class="big">${DB.customers.length}</div></div>
+  </div>
+  <h2 class="sec">Today</h2>
+  ${todays.length? todays.sort((a,b)=>new Date(a.when)-new Date(b.when)).map(bookRow).join("") : `<div class="card empty">Nothing booked today.</div>`}
+  <h2 class="sec">Next up</h2>
+  ${upcoming.slice(todays.length?0:0).filter(b=>new Date(b.when).toDateString()!==todayKey).slice(0,4).map(bookRow).join("")||`<div class="card empty">No upcoming bookings.</div>`}
+  <div class="card">
+    <button class="btn" onclick="newBooking()">📅 Book a wash</button>
+    <div class="row"><button class="btn ghost" onclick="newInvoice()">🧾 New invoice</button></div>
+    <div class="row"><button class="btn ghost" onclick="nav('promos')">📣 Send a promo</button></div>
+  </div>
+  <p class="note">Tip: add this to your home screen (Share → Add to Home Screen) so it opens like an app.</p>`;
+}
+function bookRow(b){
+  const c=DB.customers.find(c=>c.id===b.cust)||{name:"Walk-in",phone:""};
+  const when=new Date(b.when);
+  const isToday=when.toDateString()===new Date().toDateString();
+  const s=DB.services.find(s=>s.id===b.svc);
+  return `<div class="card" style="padding:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <div><div class="nm" style="font-weight:700">${esc(c.name)}</div>
+      <div class="ds" style="font-size:12px;color:var(--dim)">${s?s.name:"wash"} · ${fmtDate(b.when)}</div></div>
+      <span class="pill ${isToday?"today":"soon"}">${isToday?"TODAY":when.toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>
+    </div>
+    <div class="row">
+      <button class="btn ghost small" onclick="reminderText(${b.id})">💬 Text reminder</button>
+      <button class="btn ghost small" onclick="delBooking(${b.id})">🗑</button>
+    </div>
+  </div>`;
+}
+function delBooking(id){ if(!confirm("Remove this booking?"))return; DB.bookings=DB.bookings.filter(b=>b.id!==id); save(); render(); toast("Booking removed"); }
+function reminderText(id){
+  const b=DB.bookings.find(x=>x.id===id); const c=DB.customers.find(c=>c.id===b.cust)||{name:"there",phone:""};
+  const s=DB.services.find(s=>s.id===b.svc);
+  const msg=`Hi ${c.name}, reminder from ${biz()} 🫧 You're booked for a ${s?s.name:"wash"} on ${fmtDate(b.when)}. Reply YES to confirm or tell me if you need a different time. See you then!`;
+  if(c.phone){ window.location=smsHref(c.phone,msg); }
+  else { openSheet(`<h3>Reminder text</h3><div class="invbox">${esc(msg)}</div><div class="row"><button class="btn" onclick="copyText(this.dataset.t)" data-t="${esc(msg).replace(/"/g,"&quot;")}">Copy text</button><button class="btn ghost" onclick="closeSheet()">Close</button></div>`); }
+}
+function copyText(t){ navigator.clipboard.writeText(t.replace(/&quot;/g,'"')).then(()=>{toast("Copied");closeSheet();}); }
+
+/* ---------------- services ---------------- */
+function renderServices(){
+  $("app").innerHTML=`<h2 class="sec">Your service menu · tap to edit price</h2>
+  ${DB.services.map(s=>`<div class="card" style="padding:12px 14px">
+    <div class="item" style="border:none;padding:0">
+      <div style="flex:1"><div class="nm">${esc(s.name)}</div><div class="ds">${esc(s.desc)}</div></div>
+      <div style="text-align:right"><div class="pr">${money(s.price)}</div></div>
+    </div>
+    <div class="row"><button class="btn ghost small" onclick="editSvc(${s.id})">✏️ Edit</button><button class="btn ghost small" onclick="delSvc(${s.id})">🗑</button></div>
+  </div>`).join("")}
+  <button class="btn" onclick="editSvc(0)">➕ Add a service</button>
+  <p class="note">Prices were seeded from what washes and detailers around Port St. Lucie charge (Sparkle Car Wash full service $22.99, mobile details from ~$82) so you start competitive. Change any of them anytime.</p>`;
+}
+function editSvc(id){
+  const s=DB.services.find(x=>x.id===id)||{name:"",price:"",desc:""};
+  openSheet(`<h3>${id?"Edit":"New"} service</h3>
+  <label>Name</label><input id="f_name" value="${esc(s.name)}" placeholder="e.g. Full Service Wash">
+  <label>Price ($)</label><input id="f_price" type="number" inputmode="decimal" value="${s.price||""}" placeholder="28">
+  <label>What's included</label><textarea id="f_desc" placeholder="wash, hand dry, vacuum...">${esc(s.desc)}</textarea>
+  <div class="row"><button class="btn" onclick="saveSvc(${id})">Save</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>`);
+}
+function saveSvc(id){
+  const name=$("f_name").value.trim(), price=parseFloat($("f_price").value), desc=$("f_desc").value.trim();
+  if(!name||isNaN(price)){ toast("Name and price needed"); return; }
+  if(id){ Object.assign(DB.services.find(x=>x.id===id),{name,price,desc}); } else { DB.services.push({id:uid(),name,price,desc}); }
+  save(); closeSheet(); render(); toast("Saved");
+}
+function delSvc(id){ if(!confirm("Delete this service?"))return; DB.services=DB.services.filter(s=>s.id!==id); save(); render(); toast("Deleted"); }
+
+/* ---------------- customers ---------------- */
+function renderCustomers(){
+  $("app").innerHTML=`<h2 class="sec">Customers</h2>
+  ${DB.customers.length? DB.customers.map(c=>`<div class="card" style="padding:12px 14px">
+    <div class="item" style="border:none;padding:0">
+      <div style="flex:1"><div class="nm">${esc(c.name)}</div><div class="ds">${esc(c.phone||"no phone yet")}</div></div>
+      <div style="text-align:right;font-size:12px;color:var(--dim)">${DB.bookings.filter(b=>b.cust===c.id).length} visits</div>
+    </div>
+    <div class="row"><button class="btn ghost small" onclick="editCust(${c.id})">✏️ Edit</button><button class="btn ghost small" onclick="delCust(${c.id})">🗑</button></div>
+  </div>`).join(""):`<div class="card empty">No customers yet. Add one when they book.</div>`}
+  <button class="btn" onclick="editCust(0)">➕ Add customer</button>`;
+}
+function editCust(id){
+  const c=DB.customers.find(x=>x.id===id)||{name:"",phone:""};
+  openSheet(`<h3>${id?"Edit":"New"} customer</h3>
+  <label>Name</label><input id="c_name" value="${esc(c.name)}" placeholder="Customer name">
+  <label>Phone</label><input id="c_phone" type="tel" value="${esc(c.phone||"")}" placeholder="772-555-0123">
+  <div class="row"><button class="btn" onclick="saveCust(${id})">Save</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>`);
+}
+function saveCust(id){
+  const name=$("c_name").value.trim(), phone=$("c_phone").value.trim();
+  if(!name){ toast("Name needed"); return; }
+  if(id){ Object.assign(DB.customers.find(x=>x.id===id),{name,phone}); } else { DB.customers.push({id:Date.now(),name,phone}); }
+  save(); closeSheet(); render(); toast("Saved");
+}
+function delCust(id){ if(!confirm("Delete this customer?"))return; DB.customers=DB.customers.filter(c=>c.id!==id); save(); render(); toast("Deleted"); }
+
+/* ---------------- bookings ---------------- */
+function renderBookings(){
+  const sorted=[...DB.bookings].sort((a,b)=>new Date(a.when)-new Date(b.when));
+  $("app").innerHTML=`<button class="btn" onclick="newBooking()">➕ New booking</button><div style="height:12px"></div>
+  ${sorted.length? sorted.map(bookRow).join(""):`<div class="card empty">No bookings yet.</div>`}`;
+}
+function newBooking(){
+  openSheet(`<h3>Book a wash</h3>
+  <label>Customer</label><select id="b_cust">${DB.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select>
+  <label>Service</label><select id="b_svc">${DB.services.map(s=>`<option value="${s.id}">${esc(s.name)} — ${money(s.price)}</option>`).join("")}</select>
+  <label>Date & time</label><input id="b_when" type="datetime-local">
+  <div class="row"><button class="btn" onclick="saveBooking()">Book it</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>
+  <p class="note">No customer saved yet? Add one first in More → Customers.</p>`);
+  const dt=new Date(Date.now()+24*3600e3); dt.setMinutes(0,0,0);
+  $("b_when").value=new Date(dt.getTime()-dt.getTimezoneOffset()*6e4).toISOString().slice(0,16);
+}
+function saveBooking(){
+  const cust=parseInt($("b_cust").value), svc=parseInt($("b_svc").value), when=$("b_when").value;
+  if(!when){ toast("Pick a date & time"); return; }
+  DB.bookings.push({id:Date.now(),cust,svc,when:new Date(when).toISOString()});
+  save(); closeSheet(); nav("bookings"); toast("Booked — text them a reminder from the booking");
+}
+
+/* ---------------- invoices ---------------- */
+let INV_DRAFT={items:[],discount:0,cust:null};
+function renderInvoices(){
+  const unpaid=DB.invoices.filter(i=>!i.paid), paid=DB.invoices.filter(i=>i.paid);
+  $("app").innerHTML=`<button class="btn" onclick="newInvoice()">➕ New invoice</button><div style="height:14px"></div>
+  <h2 class="sec">Unpaid (${unpaid.length})</h2>
+  ${unpaid.length?unpaid.map(invRow).join(""):`<div class="card empty">Nothing unpaid.</div>`}
+  <h2 class="sec">Paid (${paid.length})</h2>
+  ${paid.length?paid.map(invRow).join(""):`<div class="card empty">No paid invoices yet.</div>`}`;
+}
+function invRow(i){
+  const c=DB.customers.find(c=>c.id===i.cust)||{name:"Walk-in"};
+  return `<div class="card" style="padding:12px 14px">
+    <div class="item" style="border:none;padding:0">
+      <div style="flex:1"><div class="nm">${i.num} · ${esc(c.name)}</div><div class="ds">${new Date(i.date).toLocaleDateString("en-US",{month:"short",day:"numeric"})} · ${i.items.length} item${i.items.length>1?"s":""}</div></div>
+      <div><div class="pr">${money(i.total)}</div><div style="text-align:right"><span class="pill ${i.paid?"paid":"due"}">${i.paid?"PAID":"UNPAID"}</span></div></div>
+    </div>
+    <div class="row">
+      <button class="btn ghost small" onclick="viewInv(${i.id})">👁 Open</button>
+      <button class="btn ghost small" onclick="textInv(${i.id})">💬 Text it</button>
+      ${i.paid?"":`<button class="btn green small" onclick="markPaid(${i.id})">✓ Paid</button>`}
+    </div>
+  </div>`;
+}
+function newInvoice(){
+  INV_DRAFT={items:[],discount:0,cust:null};
+  if(!DB.customers.length){ editCust(0); toast("Add the customer first, then build the invoice"); return; }
+  drawInvSheet();
+}
+function drawInvSheet(){
+  const c=DB.customers.find(x=>x.id===INV_DRAFT.cust);
+  const sub=INV_DRAFT.items.reduce((s,x)=>s+x.price,0);
+  const total=Math.max(0,sub-(INV_DRAFT.discount||0));
+  openSheet(`<h3>New invoice</h3>
+  <label>Customer</label><select id="i_cust" onchange="INV_DRAFT.cust=parseInt(this.value);drawInvSheet()">
+    ${DB.customers.map(x=>`<option value="${x.id}" ${INV_DRAFT.cust===x.id?"selected":""}>${esc(x.name)}</option>`).join("")}
+  </select>
+  ${!INV_DRAFT.cust?`<script>INV_DRAFT.cust=DB.customers[0].id;</`+`script>`:""}
+  <label>Add services</label>
+  <div>${DB.services.map(s=>`<span class="chip ${INV_DRAFT.items.find(x=>x.id===s.id)?"on":""}" onclick="addInvItem(${s.id})">${esc(s.name)} ${money(s.price)}</span>`).join("")}</div>
+  <label>Discount ($)</label><input type="number" inputmode="decimal" value="${INV_DRAFT.discount||""}" onchange="INV_DRAFT.discount=parseFloat(this.value)||0;drawInvSheet()">
+  <div style="margin-top:12px">
+    ${INV_DRAFT.items.length?INV_DRAFT.items.map(x=>`<div class="total"><span>${esc(x.name)} <span style="color:var(--dim);font-size:11px">✕</span></span><span>${money(x.price)}</span></div>`).join("")+`<div class="total"><span>Discount</span><span style="color:var(--green)">-${money(INV_DRAFT.discount||0)}</span></div><div class="total b"><span>Total</span><span style="color:var(--cyan)">${money(total)}</span></div>`:`<div class="empty">Tap services above to add them</div>`}
+  </div>
+  <div class="row"><button class="btn" onclick="saveInv()">Save invoice</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>`);
+}
+function addInvItem(sid){
+  const s=DB.services.find(x=>x.id===sid);
+  const ex=INV_DRAFT.items.find(x=>x.id===sid);
+  if(ex){ INV_DRAFT.items=INV_DRAFT.items.filter(x=>x.id!==sid); } else { INV_DRAFT.items.push({id:s.id,name:s.name,price:s.price}); }
+  drawInvSheet();
+}
+function saveInv(){
+  if(!INV_DRAFT.items.length){ toast("Add at least one service"); return; }
+  const sub=INV_DRAFT.items.reduce((s,x)=>s+x.price,0);
+  const total=Math.max(0,sub-(INV_DRAFT.discount||0));
+  DB.counters.inv++;
+  const inv={id:Date.now(),num:"INV-"+DB.counters.inv,cust:INV_DRAFT.cust,items:INV_DRAFT.items,discount:INV_DRAFT.discount||0,subtotal:sub,total,date:new Date().toISOString(),paid:false};
+  DB.invoices.push(inv); save(); closeSheet(); nav("invoices"); toast(inv.num+" saved");
+}
+function invText(i){
+  const c=DB.customers.find(x=>x.id===i.cust)||{name:"Walk-in"};
+  let t=`${biz()} — ${i.num}\nCustomer: ${c.name}\nDate: ${new Date(i.date).toLocaleDateString("en-US")}\n`;
+  i.items.forEach(x=>t+=`• ${x.name} — ${money(x.price)}\n`);
+  if(i.discount) t+=`Discount — -${money(i.discount)}\n`;
+  t+=`TOTAL: ${money(i.total)}\n`;
+  t+=i.paid?`PAID — thanks for washing with us! 🫧`:`Payment due. Cash, Zelle or Cash App. Thanks for choosing ${biz()}! 🫧`;
+  return t;
+}
+function viewInv(id){
+  const i=DB.invoices.find(x=>x.id===id);
+  openSheet(`<h3>${i.num} ${i.paid?"✅":"⏳"}</h3><div class="invbox" style="margin:10px 0">${esc(invText(i))}</div>
+  <div class="row"><button class="btn" onclick="copyText(this.dataset.t)" data-t="${esc(invText(i)).replace(/"/g,"&quot;")}">Copy</button>
+  <button class="btn ghost" onclick="textInv(${i.id})">💬 Text it</button></div>
+  <div class="row">${i.paid?"":`<button class="btn green" onclick="markPaid(${i.id});closeSheet()">✓ Mark paid</button>`}
+  <button class="btn red" onclick="delInv(${i.id});closeSheet()">Delete</button></div>`);
+}
+function markPaid(id){ const i=DB.invoices.find(x=>x.id===id); i.paid=true; save(); render(); toast(i.num+" marked paid"); }
+function delInv(id){ if(!confirm("Delete invoice?"))return; DB.invoices=DB.invoices.filter(x=>x.id!==id); save(); render(); toast("Deleted"); }
+function textInv(id){
+  const i=DB.invoices.find(x=>x.id===id); const c=DB.customers.find(x=>x.id===i.cust)||{phone:""};
+  const t=invText(i);
+  if(c.phone){ window.location=smsHref(c.phone,t); }
+  else { openSheet(`<h3>Invoice text</h3><div class="invbox">${esc(t)}</div><div class="row"><button class="btn" onclick="copyText(this.dataset.t)" data-t="${esc(t).replace(/"/g,"&quot;")}">Copy</button><button class="btn ghost" onclick="closeSheet()">Close</button></div>`); }
+}
+
+/* ---------------- promos ---------------- */
+function renderPromos(){
+  $("app").innerHTML=`<h2 class="sec">Text promos · tap one to send</h2>
+  ${DB.promos.map(p=>`<div class="card" style="padding:12px 14px">
+    <div class="item" style="border:none;padding:0">
+      <div style="flex:1"><div class="nm">${esc(p.title)}</div><div class="ds">code ${esc(p.code)}</div></div>
+    </div>
+    <div class="row"><button class="btn small" onclick="sendPromo(${p.id})">💬 Send to a customer</button>
+    <button class="btn ghost small" onclick="editPromo(${p.id})">✏️</button><button class="btn ghost small" onclick="delPromo(${p.id})">🗑</button></div>
+  </div>`).join("")}
+  <button class="btn" onclick="editPromo(0)">➕ New promo</button>
+  <p class="note">Pick a customer and the text opens in Messages with the promo already written — just hit send. Works for WhatsApp too: paste it in.</p>`;
+}
+function sendPromo(id){
+  const p=DB.promos.find(x=>x.id===id);
+  if(!DB.customers.length){ toast("Add a customer first (More tab)"); nav("more"); return; }
+  openSheet(`<h3>Send: ${esc(p.title)}</h3><label>Who</label>
+  ${DB.customers.map(c=>`<div class="card" style="padding:10px 12px;margin-bottom:8px"><div class="item" style="border:none;padding:0"><div style="flex:1"><div class="nm">${esc(c.name)}</div><div class="ds">${esc(c.phone||"no phone")}</div></div><button class="btn small" onclick="firePromo('${p.id}','${c.id}')">Send</button></div></div>`).join("")}
+  <button class="btn ghost" onclick="closeSheet()">Cancel</button>`);
+}
+function firePromo(pid,cid){
+  const p=DB.promos.find(x=>x.id===pid), c=DB.customers.find(x=>x.id===cid);
+  const msg=p.msg.replace(/\{name\}/g,c.name.split(" ")[0]).replace(/\{biz\}/g,biz()).replace(/\{code\}/g,p.code);
+  closeSheet();
+  if(c.phone){ window.location=smsHref(c.phone,msg); }
+  else { copyText(msg); toast("No phone on file — promo copied, paste it anywhere"); }
+}
+function editPromo(id){
+  const p=DB.promos.find(x=>x.id===id)||{title:"",code:"",msg:"Hey {name}! {biz} here — {offer}. Reply to book 🚗"};
+  openSheet(`<h3>${id?"Edit":"New"} promo</h3>
+  <label>Title</label><input id="p_title" value="${esc(p.title)}" placeholder="e.g. $5 off first wash">
+  <label>Code</label><input id="p_code" value="${esc(p.code)}" placeholder="FIRSTWASH5">
+  <label>Message · use {name} {biz} {code}</label><textarea id="p_msg">${esc(p.msg)}</textarea>
+  <div class="row"><button class="btn" onclick="savePromo(${id})">Save</button><button class="btn ghost" onclick="closeSheet()">Cancel</button></div>`);
+}
+function savePromo(id){
+  const title=$("p_title").value.trim(), code=$("p_code").value.trim().toUpperCase(), msg=$("p_msg").value.trim();
+  if(!title||!msg){ toast("Title and message needed"); return; }
+  if(id){ Object.assign(DB.promos.find(x=>x.id===id),{title,code,msg}); } else { DB.promos.push({id:Date.now(),title,code,msg}); }
+  save(); closeSheet(); render(); toast("Promo saved");
+}
+function delPromo(id){ if(!confirm("Delete promo?"))return; DB.promos=DB.promos.filter(p=>p.id!==id); save(); render(); toast("Deleted"); }
+
+/* ---------------- more ---------------- */
+function renderMore(){
+  $("app").innerHTML=`
+  <div class="card">
+    <h2 class="sec">Business</h2>
+    <label>Business name</label><input id="m_name" value="${esc(DB.biz.name)}">
+    <label>Tagline</label><input id="m_tag" value="${esc(DB.biz.tag)}">
+    <div class="row"><button class="btn" onclick="saveBiz()">Save</button></div>
+  </div>
+  <div class="card"><h2 class="sec">Data</h2>
+    <div class="row"><button class="btn ghost" onclick="exportData()">⬇️ Export backup</button><button class="btn ghost" onclick="wipeData()">🧨 Reset app</button></div>
+    <p class="note">Everything is stored on this device. Export a backup now and then so a phone swap never costs you your customers.</p>
+  </div>
+  <button class="btn ghost" onclick="nav('cust')">👥 Customers</button>`;
+}
+function navCust(){ TAB="cust"; renderCustomers(); $("tabs").innerHTML=TABS.map(t=>`<button onclick="nav('${t.id}')"><span>${t.ic}</span>${t.label}</button>`).join(""); }
+function saveBiz(){ DB.biz.name=$("m_name").value.trim()||"Wash Boss"; DB.biz.tag=$("m_tag").value.trim(); save(); render(); toast("Saved"); }
+function exportData(){
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="washboss-backup-"+new Date().toISOString().slice(0,10)+".json"; a.click();
+}
+function wipeData(){ if(confirm("Erase everything and start over?")){ localStorage.removeItem("cwdb_v1"); DB=load(); render(); toast("Reset"); } }
+
+/* tab swap for customers via more */
+function nav(id){ TAB=id; render(); }
+
+/* ---------------- reminders ---------------- */
+if("Notification" in window && Notification.permission==="default"){ setTimeout(()=>Notification.requestPermission(),4000); }
+function checkReminders(){
+  const now=new Date();
+  const soon=DB.bookings.filter(b=>{ const d=new Date(b.when); return d>now && (d-now)<36e5*26 && !b.reminded; });
+  soon.forEach(b=>{
+    const c=DB.customers.find(c=>c.id===b.cust)||{name:"customer"};
+    if(Notification.permission==="granted"){ new Notification("Wash coming up", {body:"You have "+c.name+" booked for "+fmtDate(b.when)}); }
+    b.reminded=true;
+  });
+  if(soon.length) save();
+}
+checkReminders(); setInterval(checkReminders, 6e5);
+
+render();
+</script>
+</body>
+</html>
